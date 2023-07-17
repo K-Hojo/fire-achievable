@@ -3,17 +3,19 @@ services:
   app:
     build: 
       context: .
-      dockerfile: ./dockerfile
+      target: dev
+    image: fire-app:1.0.0
     volumes:
-      - ./src:/src
-      - node_modules:/app/node_modules
+      - type: bind
+        source: ./src
+        target: /src
+      - type: volume
+        source: node_modules
+        target: /src/node_modules
     ports:
       - "3000:3000"
     tty: true
     stdin_open: true
-    environment:
-      - NODE_ENV=development
-    command: ["npm", "run", "dev"]
 
 volumes:
   node_modules:
